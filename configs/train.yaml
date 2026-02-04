@@ -1,9 +1,9 @@
-model: yolov8n.pt
+model: yolov8s.pt
 data: data/yolo_polyp/data.yaml
-epochs: 100
-imgsz: 640
+epochs: 150
+imgsz: 960
 batch: 16
 device: 0
 workers: 4
-project: runs
+project: runs/detect
 name: polyp
