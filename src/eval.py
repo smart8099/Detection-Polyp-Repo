@@ -18,6 +18,7 @@ if __name__ == "__main__":
     parser.add_argument("--config", default="configs/train.yaml")
     parser.add_argument("--weights", required=True)
     parser.add_argument("--device")
+    parser.add_argument("--conf", type=float, default=None, help="Confidence threshold override")
     args = parser.parse_args()
 
     cfg = load_config(Path(args.config))
@@ -27,5 +28,6 @@ if __name__ == "__main__":
         imgsz=cfg.get("imgsz", 640),
         batch=cfg.get("batch", 16),
         device=args.device if args.device is not None else cfg.get("device", 0),
+        conf=args.conf if args.conf is not None else cfg.get("conf", None),
         split="test",
     )
