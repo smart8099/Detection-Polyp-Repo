@@ -21,10 +21,14 @@ if __name__ == "__main__":
     parser.add_argument("--conf", type=float, default=None, help="Confidence threshold override")
     args = parser.parse_args()
 
-    cfg = load_config(Path(args.config))
+    cfg_path = Path(args.config)
+    cfg = load_config(cfg_path)
+    data_path = Path(cfg["data"])
+    if not data_path.is_absolute():
+        data_path = (cfg_path.parent / data_path).resolve()
     model = YOLO(args.weights)
     model.val(
-        data=cfg["data"],
+        data=str(data_path),
         imgsz=cfg.get("imgsz", 640),
         batch=cfg.get("batch", 16),
         device=args.device if args.device is not None else cfg.get("device", 0),
